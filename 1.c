@@ -43,31 +43,34 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
-    FITNESS_DATA fitness[1000];  // assuming max 1000 records
-    int n = 0;
+    FITNESS_DATA data[1000];
     char str1[100];
-    FILE* file = fopen("FitnessData_2023.csv", "r");
-    if (file == NULL) {
+    FILE* file=fopen("FitnessData_2023.csv","r");
+    if (file == NULL){
         perror("");
         return 1;
     }
 
-    
-    char date[11], time[6], steps[10];
-    while (fgets(str1, 1000, file)!=NULL) {
+    int n = 0;
+    while (fgets(str1, 1000, file)!=NULL)
+    {
+        char date[11];
+	    char time[6];
+	    char steps[10];
         tokeniseRecord(str1, ",", date, time, steps);
-        strcpy(fitness[n].date, date);
-        strcpy(fitness[n].time, time);
-        fitness[n].steps = atoi(steps);
+        
+        strcpy(data[n].date, date);
+        strcpy(data[n].time, time);
+        data[n].steps = atoi(steps);
         n++;
         
     }
-
+    
     printf("Number of records in file: %d\n", n);
-
-    for (n = 0; n < 3; n++) {
-        printf("%s/%s/%d\n", fitness[n].date, fitness[n].time, fitness[n].steps);
+    for (int i=0; i<3; i++){
+        printf("%s/%s/%d\n",data[i].date, data[i].time, data[i].steps);
     }
     fclose(file);
+    
     return 0;
 }
